@@ -1,0 +1,40 @@
+header {
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+.logo {
+    width: 100px;
+    border: 1px solid red;
+}
+
+.logo img {
+    width: 100%;
+}
+
+.btn-menu a {
+    text-decoration: none;
+    border: 1px solid navy;
+    color: white;
+    background-color: blue;
+    padding: 5 px;
+}
+
+/* main */
+
+main {
+    min-height: 20em;
+}
+
+/* Footer */
+
+footer {
+    background-color: lightblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
