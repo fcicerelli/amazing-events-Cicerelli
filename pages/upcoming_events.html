@@ -1,1 +1,133 @@
-!
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../assets/images/favicon-AmazingEvents.ico" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <title>Upcoming Events</title>
+</head>
+
+<body class="conteiner">
+
+    <header class="d-flex justify-content-between align-items-center p-5 bg-primary-subtle">
+        <div class="logo col-1">
+            <a href="../index.html">
+                <img src="../assets/images/Logo_Amazing_Events.png" alt="Logo_Amazing_Events"
+                    class="img-fluid img-thumbnail rounded-0">
+            </a>
+        </div>
+        <!-- Menu -->
+        <nav class="btn-menu d-flex justify-content-between align-items-center">
+            <a href="../index.html" class="btn col-2 py-3 btn-outline-primary rounded-0">Home</a>
+            <a href="#" class="btn col-3 btn-primary rounded-0">Upcoming Events</a>
+            <a href="./past_events.html" class="btn col-2 btn-outline-primary rounded-0">Past Events</a>
+            <a href="./contact.html" class="btn col-2 py-3 btn-outline-primary rounded-0">contact</a>
+            <a href="./stats.html" class="btn col-2 py-3 btn-outline-primary rounded-0">stats</a>
+        </nav>
+    </header>
+    <main>
+        <!-- Title -->
+        <div class="d-flex justify-content-between align-items-center p-5 bg-info-subtle">
+            <a href="../index.html" class="h1"><i class="fa fa-solid fa-angle-left"></i></a>
+            <h1>Upcoming Events</h1>
+            <a href="./upcoming_events.html" class="h1"><i class="fa fa-solid fa-angle-right"></i></a>
+        </div>
+        <!-- Search -->
+        <div class="d-flex flex-column flex-lg-row  justify-content-between align-items-center p-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="me-3">
+                    <input type="checkbox" name="category" id="category1">
+                    <label for="category1">Category1</label>
+                </div>
+                <div class="me-3">
+                    <input type="checkbox" name="category" id="category2">
+                    <label for="category2">Category2</label>
+                </div>
+                <div class="me-3">
+                    <input type="checkbox" name="category" id="category3">
+                    <label for="category3">Category3</label>
+                </div>
+                <div class="me-3">
+                    <input type="checkbox" name="category" id="category4">
+                    <label for="category4">Category4</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="category" id="category5">
+                    <label for="category5">Category5</label>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <input type="text" name="search" id="search">
+                <button class="btn p-0 px-1 btn-primary rounded-0" for="search"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+        <!-- Cards -->
+        <div class="d-flex justify-content-around align-items-center vh-50 mb-5 pb-5">
+            <div class="card h-100 rounded-0 col-2">
+                <img src="../assets/images/Cinema.jpg" class="card-img-top rounded-0" alt="...">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title">Título</h5>
+                    <p class="card-text">Texto Descriptivo</p>
+                    <div>
+                        <p class="d-inline">Price: $1000</p>
+                        <a href="./details.html" class="btn btn-primary rounded-0">Ver mas...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card h-100 rounded-0 col-2">
+                <img src="../assets/images/Costume_Party.jpg" class="card-img-top rounded-0" alt="...">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title">Título</h5>
+                    <p class="card-text">Texto Descriptivo</p>
+                    <div>
+                        <p class="d-inline">Price: $1000</p>
+                        <a href="./details.html" class="btn btn-primary rounded-0">Ver mas...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card h-100 rounded-0 col-2">
+                <img src="../assets/images/Marathon.jpg" class="card-img-top rounded-0" alt="...">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title">Título</h5>
+                    <p class="card-text">Texto Descriptivo</p>
+                    <div>
+                        <p class="d-inline">Price: $1000</p>
+                        <a href="./details.html" class="btn btn-primary rounded-0">Ver mas...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card h-100 rounded-0 col-2">
+                <img src="../assets/images/Music_Concert.jpg" class="card-img-top rounded-0" alt="...">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <h5 class="card-title">Título</h5>
+                    <p class="card-text">Texto Descriptivo</p>
+                    <div>
+                        <p class="d-inline">Price: $1000</p>
+                        <a href="./details.html" class="btn btn-primary rounded-0">Ver mas...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="d-flex justify-content-between align-items-center py-2 px-5 bg-primary-subtle">
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="https://www.instagram.com/" class="me-5 text-danger fs-3"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/" class="me-5 text-primary fs-3"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/54011234567"><i class="fab fa-whatsapp text-success fs-3"></i></a>
+        </div>
+        <h4>FE01-TM</h4>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
