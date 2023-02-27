@@ -3,6 +3,8 @@ let cardsGrid = document.getElementById("cardsGrid")
 let cards = events.events
 let currentDate = events.currentDate
 
+console.log(cards.length);
+
 function allCards(cards) {
     let cardCollection = ``
     for (card of cards) {
@@ -24,6 +26,7 @@ function oneCard(card) {
                 </div>
             </div>`
 }
+
 
 allCards(cards)
 
