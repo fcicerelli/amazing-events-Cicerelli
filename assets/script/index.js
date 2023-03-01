@@ -27,8 +27,28 @@ function oneCard(card) {
             </div>`
 }
 
+let categoriesMenu = document.getElementById('categoriesMenu')
+categoriesMenu.style.color = "darkblue"
+/* let categories = ['Teatro', 'Opera', 'Deporte', 'Carreras'] */
+let categories = []
+cards.forEach((element) => {
+    if (!categories.includes(element.category)) {
+        categories.push(element.category)
+    }
+})
+
+let menues = ''
+categories.forEach(category => {
+    menues += `<div class="me-3" >
+                                <input type="checkbox" name="category" id="category1">
+                                <label for="category1">${category}</label>
+                            </div>`})
+
+categoriesMenu.innerHTML = menues
 
 allCards(cards)
+
+console.log(cards[1].category);
 
 
 
