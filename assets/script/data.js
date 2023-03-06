@@ -1,4 +1,4 @@
-let events = {
+const events = {
     "currentDate": "2022-09-01",
     "events": [
         {
