@@ -45,20 +45,23 @@ categoriesMenu.innerHTML = menues
 
 allCards(cards)
 
-//    Barra de Busqueda
+//         ------            Barra de Busqueda         -------        //
 
 let searchText = document.getElementById("searchText")
 
-searchText.innerText = "escriba aqui"
-searchText.setAttribute('value', 'escriba aqui');
+//searchText.innerText = "escriba"
+//searchText.setAttribute('value', 'escriba aqui');
 
 // change
-searchText.addEventListener('change', function () {
+/* searchText.addEventListener('change', function () {
     console.log("evento chage: " + searchText.value);
-})
+}) */
 // keyUp
-searchText.addEventListener('keyup', function () {
+searchText.addEventListener('keyup', function (e) {
     console.log("evento keyup: " + searchText.value)
+    cards.filter(event => {
+
+    })
 })
 
 let searchBtn = document.getElementById("searchBtn")
@@ -67,13 +70,33 @@ searchBtn.addEventListener('click', () => {
 })
 
 //checked para el checkbox
-
+let filteredCategory = []
 categoriesMenu.addEventListener('click', (e) => {
-    console.log(e.target);
-    console.log(e.target.value);
-    console.log(e.target.checked);
+    console.log("e.target.value: " + e.target.value + " | e.target.checked: " + e.target.checked);
+
+    if (e.target.checked) {
+        cards.forEach(event => {
+            if (e.target.value === event.category && e.target.checked) {
+                filteredCategory.push(event)
+                console.log("agregando...");
+            }
+        })
+        // recorrer el array buscando la categoría y pushear a filteredCategory
+    } else {
+        // recorrer el filteredCategory buscando la categoría y sacarla de filteredCategory
+        cards.forEach((event, index) => {
+            if (e.target.value === event.category && !e.target.checked) {
+                //filteredCategory.slice(index, 1)
+                filteredCategory = filteredCategory.filter(event => !(e.target.value === event.category && !e.target.checked))
+                console.log("borrando...");
+            }
+        })
+    }
+    console.log("-----------------------------------");
+    filteredCategory.map(c => console.log(c.name, c.category))
+    console.log(filteredCategory.length);
 })
 
 
-let checkboxes = document.querySelectorAll("input[checkbox]")
-console.log("------- los checboxes  ------ " + checkboxes);
+//let checkboxes = document.querySelectorAll("input[checkbox]")
+//console.log("------- los checboxes  ------ " + checkboxes);

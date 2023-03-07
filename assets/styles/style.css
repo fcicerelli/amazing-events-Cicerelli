@@ -34,6 +34,10 @@ main {
     object-fit: cover;
 }
 
+.filtro {
+    display: none;
+}
+
 @media (max-width: 620px) {
     div div label {
         font-size: 12px;

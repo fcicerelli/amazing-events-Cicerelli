@@ -22,11 +22,16 @@ details.innerHTML = `
                         <div class="col-md-6">
                             <div class="card-body m-4 d-flex flex-column align-items-center">
                                 <h5 class="card-title">${myEvent.name}</h5>
-                                <p class="card-text">${myEvent.place}</p>
+                                <p class="card-text">Place: ${myEvent.place}</p>
                                 <p class="card-text">${myEvent.description}</p>
                                 <p class="card-text">Date: ${myEvent.date}</p>
                                 <p class="card-text">Price: $${myEvent.price}</p>
-                                <a href="javascript: history.go(-1)" class="btn btn-primary rounded-0" id="ancla">Ver mas...</a>
+                                <p class="card-text">Capacidad: ${myEvent.capacity}</p>
+                                <p class="card-text">Asistencia: ${myEvent.assistance || myEvent.estimate}</p>
+                                <div class="">
+                                    <a href="javascript: history.go(-1)" class="btn btn-primary rounded-0" id="ancla"><< Volver</a>
+                                    <a href="#" onclick="alert('Sorry! This functionality is under construction.')" class="btn btn-danger rounded-0" id="asist"> Asistir </a>
+                                </div>
                             </div>
                         </div>
                     </div>
