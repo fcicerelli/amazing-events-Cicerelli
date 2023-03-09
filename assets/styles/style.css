@@ -38,6 +38,14 @@ main {
     display: none;
 }
 
+.custom-color-upcoming-event {
+    background-color: lightyellow;
+}
+
+.custom-color-past-event {
+    background-color: lightgrey;
+}
+
 @media (max-width: 620px) {
     div div label {
         font-size: 12px;

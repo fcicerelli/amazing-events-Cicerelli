@@ -2,17 +2,43 @@
 let cardsGrid = document.getElementById("cardsGrid")
 let cards = events.events
 let currentDate = events.currentDate
+let filteredCategory = []
+let filterBySearchText = []
+let nothing = false
 
-function allCards(cards) {
+//         -------------         Cards         --------------
+
+function renderCards() {
+    if (filterBySearchText.length > 0) {
+        allCards(filterBySearchText)
+        console.log("render filtered");
+    } else {
+        if (nothing) {
+            cardsGrid.innerHTML = `
+            <div>
+            <h3>Nothing found</h3>
+            <img src="../assets/images/nothing_found.jpg" class="card-img-top" alt="Nothing found">
+            </div>                        `
+            console.log(nothing)
+        } else {
+            allCards(cards)
+            console.log("render all");
+            console.log(nothing)
+        }
+    }
+}
+
+//console.log(cards);
+function allCards(arr) {
     let cardCollection = ``
-    for (card of cards) {
+    for (card of arr) {
         cardCollection += oneCard(card)
     }
     cardsGrid.innerHTML = cardCollection
 }
 
 function oneCard(card) {
-    return `<div class="card h-100 rounded-0 col-2">
+    return `<div class="card h-100 rounded-0 col-12 col-sm-5 col-md-4 col-lg-3">
                 <img src="${card.image}" class="card-img-top" alt="${card.place}">
                 <div class="card-body d-flex flex-column align-items-center">
                     <h5 class="card-title">${card.name}</h5>
@@ -24,6 +50,8 @@ function oneCard(card) {
                 </div>
             </div>`
 }
+
+//    --------------      Categories    Menu     -----------------------
 
 let categoriesMenu = document.getElementById('categoriesMenu')
 
@@ -43,34 +71,35 @@ categories.forEach(category => {
 
 categoriesMenu.innerHTML = menues
 
-allCards(cards)
+renderCards()
 
 //         ------            Barra de Busqueda         -------        //
 
 let searchText = document.getElementById("searchText")
 
-//searchText.innerText = "escriba"
-//searchText.setAttribute('value', 'escriba aqui');
-
-// change
-/* searchText.addEventListener('change', function () {
-    console.log("evento chage: " + searchText.value);
-}) */
 // keyUp
 searchText.addEventListener('keyup', function (e) {
-    console.log("evento keyup: " + searchText.value)
-    cards.filter(event => {
-
+    filterBySearchText = []
+    console.log("evento keyup: " + searchText.value.trim().toLowerCase())
+    cards.forEach(event => {
+        if (event.name.toLowerCase().includes(searchText.value.trim().toLowerCase())) {
+            filterBySearchText.push(event)
+            console.log(event.name.toLowerCase() + " | " + searchText.value.trim().toLowerCase())
+        }
     })
+    console.log(filterBySearchText.length);
+    if (filterBySearchText.length == 0 && searchText.length != 0) {
+        nothing = true
+    } else {
+        nothing = false
+    }
+    //allCards(filterBySearchText)
+    renderCards()
 })
 
-let searchBtn = document.getElementById("searchBtn")
-searchBtn.addEventListener('click', () => {
-    console.log("evento click: " + searchText.value)
-})
 
 //checked para el checkbox
-let filteredCategory = []
+
 categoriesMenu.addEventListener('click', (e) => {
     console.log("e.target.value: " + e.target.value + " | e.target.checked: " + e.target.checked);
 
@@ -95,8 +124,14 @@ categoriesMenu.addEventListener('click', (e) => {
     console.log("-----------------------------------");
     filteredCategory.map(c => console.log(c.name, c.category))
     console.log(filteredCategory.length);
+    //allCards(filteredCategory)
+    if (filteredCategory.length == 0 && !e.target.checked) {
+        nothing = false
+    } else {
+        nothing = true
+    }
+    console.log(nothing)
+    renderCards()
 })
 
 
-//let checkboxes = document.querySelectorAll("input[checkbox]")
-//console.log("------- los checboxes  ------ " + checkboxes);
