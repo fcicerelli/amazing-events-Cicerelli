@@ -17,13 +17,16 @@ function renderCards() {
         if (filterBySearchText.length > 0 && filteredCategory.lenght == 0) {
             // si solo el buscador tiene resultado
             doubleFilter = filterBySearchText
+            console.log("ONLY TEXTBOX")
         } else if (filterBySearchText.length == 0 && filteredCategory.lenght > 0) {
             // si solo los checkbox tienen resultados
             doubleFilter = filteredCategory
+            console.log("ONLY CATEGORY")
         } else {
             // si ambos tienen resultados
             let s = new Set(filteredCategory)
             doubleFilter = filterBySearchText.filter(item => s.has(item))
+            console.log("TEXTBOX AND CATEGORY")
             /*  filterBySearchText.forEach((searchText, index) => {
                  if (searchText._id.includes(filteredCategory)) {
                      doubleFilter.push(card)
@@ -33,7 +36,7 @@ function renderCards() {
         allCards(doubleFilter)
         console.log("render doubleFilter");
     } else {
-        if (nothingFoundTextBox && nothingFoundCheckBox) {
+        if (!nothingFoundTextBox && !nothingFoundCheckBox) {
             cardsGrid.innerHTML = `
             <div>
             <h3>Nothing found</h3>
@@ -113,7 +116,7 @@ searchText.addEventListener('keyup', function (e) {
     } else {
         nothingFoundTextBox = false
     }
-    console.log("Se encontró algo en el textBox? " + nothingFoundTextBox);
+    console.log("Se encontró algo en el textBox? " + !nothingFoundTextBox);
     //allCards(filterBySearchText)
     renderCards()
 })
@@ -147,11 +150,11 @@ categoriesMenu.addEventListener('click', (e) => {
     console.log(filteredCategory.length);
     //allCards(filteredCategory)
     if (filteredCategory.length == 0 && !e.target.checked) {
-        nothingFoundCheckBox = false
-    } else {
         nothingFoundCheckBox = true
+    } else {
+        nothingFoundCheckBox = false
     }
-    console.log("Se encontró algo en el CheckBox ? " + nothingFoundCheckBox)
+    console.log("Se encontró algo en el CheckBox ? " + !nothingFoundCheckBox)
     renderCards()
 })
 
