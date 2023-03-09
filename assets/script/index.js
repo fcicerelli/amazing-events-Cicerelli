@@ -4,26 +4,46 @@ let cards = events.events
 let currentDate = events.currentDate
 let filteredCategory = []
 let filterBySearchText = []
-let nothing = false
+let doubleFilter = []
+let nothingFoundCheckBox = false
+let nothingFoundTextBox = false
 
 //         -------------         Cards         --------------
 
 function renderCards() {
-    if (filterBySearchText.length > 0) {
-        allCards(filterBySearchText)
-        console.log("render filtered");
+    if (filterBySearchText.length > 0 || filteredCategory.length > 0) {
+        // si algun filtro tiene resultado
+        doubleFilter = []
+        if (filterBySearchText.length > 0 && filteredCategory.lenght == 0) {
+            // si solo el buscador tiene resultado
+            doubleFilter = filterBySearchText
+        } else if (filterBySearchText.length == 0 && filteredCategory.lenght > 0) {
+            // si solo los checkbox tienen resultados
+            doubleFilter = filteredCategory
+        } else {
+            // si ambos tienen resultados
+            let s = new Set(filteredCategory)
+            doubleFilter = filterBySearchText.filter(item => s.has(item))
+            /*  filterBySearchText.forEach((searchText, index) => {
+                 if (searchText._id.includes(filteredCategory)) {
+                     doubleFilter.push(card)
+                 }
+             }) */
+        }
+        allCards(doubleFilter)
+        console.log("render doubleFilter");
     } else {
-        if (nothing) {
+        if (nothingFoundTextBox && nothingFoundCheckBox) {
             cardsGrid.innerHTML = `
             <div>
             <h3>Nothing found</h3>
             <img src="../assets/images/nothing_found.jpg" class="card-img-top" alt="Nothing found">
             </div>                        `
-            console.log(nothing)
+            console.log(nothingFoundTextBox && nothingFoundCheckBox)
         } else {
             allCards(cards)
             console.log("render all");
-            console.log(nothing)
+            console.log(nothingFoundTextBox && nothingFoundCheckBox)
         }
     }
 }
@@ -73,7 +93,7 @@ categoriesMenu.innerHTML = menues
 
 renderCards()
 
-//         ------            Barra de Busqueda         -------        //
+//         ------           Search Bar         -------        //
 
 let searchText = document.getElementById("searchText")
 
@@ -89,10 +109,11 @@ searchText.addEventListener('keyup', function (e) {
     })
     console.log(filterBySearchText.length);
     if (filterBySearchText.length == 0 && searchText.length != 0) {
-        nothing = true
+        nothingFoundTextBox = true
     } else {
-        nothing = false
+        nothingFoundTextBox = false
     }
+    console.log("Se encontró algo en el textBox? " + nothingFoundTextBox);
     //allCards(filterBySearchText)
     renderCards()
 })
@@ -121,16 +142,16 @@ categoriesMenu.addEventListener('click', (e) => {
             }
         })
     }
-    console.log("-----------------------------------");
+    console.log("-------------------------");
     filteredCategory.map(c => console.log(c.name, c.category))
     console.log(filteredCategory.length);
     //allCards(filteredCategory)
     if (filteredCategory.length == 0 && !e.target.checked) {
-        nothing = false
+        nothingFoundCheckBox = false
     } else {
-        nothing = true
+        nothingFoundCheckBox = true
     }
-    console.log(nothing)
+    console.log("Se encontró algo en el CheckBox ? " + nothingFoundCheckBox)
     renderCards()
 })
 
