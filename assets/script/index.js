@@ -1,12 +1,26 @@
-
+let URL = "https://mindhub-xj03.onrender.com/api/amazing"
 let cardsGrid = document.getElementById("cardsGrid")
-let cards = events.events
-let currentDate = events.currentDate
+let cards = [] // = events.events
+let currentDate // = events.currentDate
 let filteredCategory = []
 let filterBySearchText = []
 let doubleFilter = []
 let nothingFoundCheckBox = false
 let nothingFoundTextBox = false
+
+
+fetch(URL)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        currentDate = data.currentDate
+        cards = data.events
+        console.log(currentDate)
+        console.log(cards)
+        console.log(cards.length)
+        allCards(cards)
+    })
+    .catch(error => console.log(error))
 
 //         -------------         Cards         --------------
 

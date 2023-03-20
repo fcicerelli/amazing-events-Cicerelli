@@ -14,22 +14,13 @@ fetch(URL)
         console.log(currentDate)
         console.log(cards)
         for (card of cards) {
-            if (card.date > currentDate)
+            if (card.date >= currentDate)
                 upcomingEvents.push(card)
         }
         console.log(upcomingEvents.length);
         allCards(upcomingEvents)
     })
     .catch(error => console.log(error))
-
-/* let data;
-async function getData() {
-    await fetch('https://mindhub-xj03.onrender.com/api/amazing')
-        .then(response => response.json())
-        .then(json => data = json)
-    console.log(data);
-}
-getData() */
 
 function allCards(cards) {
     let cardCollection = ``

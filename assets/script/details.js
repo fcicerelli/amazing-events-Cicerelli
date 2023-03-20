@@ -1,23 +1,42 @@
-let myEvents = events.events
-let currentDate = events.currentDate
+let URL = "https://mindhub-xj03.onrender.com/api/amazing"
+let myEvents = [] // events.events
+let currentDate // = events.currentDate
+let myEvent
+
 // recuperamos el querystring
 const querystring = window.location.search
-console.log(myEvents); console.log(querystring);
+console.log(querystring);
 // usando el querystring, creamos un objeto del tipo URLSearchParams
 const params = new URLSearchParams(querystring)
 
 let id = parseInt(params.get('id'))
 console.log(id);
-const myEvent = myEvents.find(event => event._id == id)
-
-console.log(myEvent);
 
 let details = document.getElementById("details")
 console.log(details);
 
-if (myEvent.date > currentDate) {
-    // Upcoming Events
-    details.innerHTML = `
+fetch(URL)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        currentDate = data.currentDate
+        myEvents = data.events
+        console.log(currentDate)
+        console.log(myEvents)
+        console.log(myEvents.length)
+        myEvent = myEvents.find(event => event._id == id)
+        console.log(myEvent);
+        showDetails()
+    })
+    .catch(error => console.log(error))
+
+
+
+
+function showDetails() {
+    if (myEvent.date > currentDate) {
+        // Upcoming Events
+        details.innerHTML = `
                     <div class="row g-0 d-flex align-items-center custom-color-upcoming-event">
                         <div class="col-md-6">
                             <img src="${myEvent.image}" class="img-fluid m-4" alt="Image of ${myEvent.image}">
@@ -39,9 +58,9 @@ if (myEvent.date > currentDate) {
                         </div>
                     </div>
 `
-} else {
-    // Past Events
-    details.innerHTML = `
+    } else {
+        // Past Events
+        details.innerHTML = `
                     <div class="row g-0 d-flex align-items-center custom-color-past-event">
                         <div class="col-md-6">
                             <img src="${myEvent.image}" class="img-fluid m-4" alt="Image of ${myEvent.image}">
@@ -64,5 +83,6 @@ if (myEvent.date > currentDate) {
                         </div>
                     </div>
 `
-}
+    }
 
+}

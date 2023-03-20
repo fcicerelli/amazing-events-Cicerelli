@@ -1,15 +1,26 @@
+let URL = "https://mindhub-xj03.onrender.com/api/amazing"
+
 let cardsGrid = document.getElementById("cardsGrid")
-let cards = events.events
-let currentDate = events.currentDate
-
-
+let cards = [] // = events.events
+let currentDate // = events.currentDate
 let pastEvents = []
-for (card of cards) {
-    if (card.date < currentDate)
-        pastEvents.push(card)
-}
 
-console.log(pastEvents.length);
+fetch(URL)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        currentDate = data.currentDate
+        cards = data.events
+        console.log(currentDate)
+        console.log(cards)
+        for (card of cards) {
+            if (card.date < currentDate)
+                pastEvents.push(card)
+        }
+        console.log(pastEvents.length);
+        allCards(pastEvents)
+    })
+    .catch(error => console.log(error))
 
 function allCards(cards) {
     let cardCollection = ``
@@ -32,5 +43,3 @@ function oneCard(card) {
                 </div>
             </div>`
 }
-
-allCards(pastEvents)
