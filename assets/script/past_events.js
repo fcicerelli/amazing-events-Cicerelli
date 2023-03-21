@@ -38,7 +38,7 @@ function oneCard(card) {
                     <p class="card-text">${card.description}</p>
                     <div>
                         <p class="d-inline text-danger fw-bold">Price: $ ${card.price}</p>
-                        <a href="./pages/details.html?id=${card._id}" class="btn btn-primary rounded-0">More...</a>
+                        <a href="./details.html?id=${card._id}" class="btn btn-primary rounded-0">More...</a>
                     </div>
                 </div>
             </div>`

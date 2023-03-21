@@ -2,23 +2,25 @@ let URL = "https://mindhub-xj03.onrender.com/api/amazing"
 let cardsGrid = document.getElementById("cardsGrid")
 let cards = [] // = events.events
 let currentDate // = events.currentDate
-let filteredCategory = []
+var filteredCategory = []
 let filterBySearchText = []
 let doubleFilter = []
 let nothingFoundCheckBox = false
 let nothingFoundTextBox = false
-
+console.log(filteredCategory);
 
 fetch(URL)
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        //console.log(data);
         currentDate = data.currentDate
         cards = data.events
-        console.log(currentDate)
-        console.log(cards)
-        console.log(cards.length)
+        //console.log(currentDate)
+        //console.log(cards)
+        //console.log(cards.length)
+        menuCategories()
         allCards(cards)
+
     })
     .catch(error => console.log(error))
 
@@ -28,14 +30,27 @@ function renderCards() {
     if (filterBySearchText.length > 0 || filteredCategory.length > 0) {
         // si algun filtro tiene resultado
         doubleFilter = []
-        if (filterBySearchText.length > 0 && filteredCategory.lenght == 0) {
+        console.log(filterBySearchText.length);
+        console.log(filteredCategory.length);
+        if (filterBySearchText.length > 0 && filteredCategory.length == 0) {
             // si solo el buscador tiene resultado
             doubleFilter = filterBySearchText
+            console.log(doubleFilter);
             console.log("ONLY TEXTBOX")
-        } else if (filterBySearchText.length == 0 && filteredCategory.lenght > 0) {
+        } else if (filterBySearchText.length == 0 && filteredCategory.length > 0) {
             // si solo los checkbox tienen resultados
-            doubleFilter = filteredCategory
             console.log("ONLY CATEGORY")
+            console.log(nothingFoundTextBox);
+            if (!nothingFoundTextBox) {
+                doubleFilter = filteredCategory
+            } else {
+                console.log("entra al else");
+                cardsGrid.innerHTML = `
+            <div>
+            <h3>Nothing found</h3>
+            <img src="../assets/images/nothing_found.jpg" class="card-img-top" alt="Nothing found">
+            </div>                        `
+            }
         } else {
             // si ambos tienen resultados
             let s = new Set(filteredCategory)
@@ -47,10 +62,10 @@ function renderCards() {
                  }
              }) */
         }
-        allCards(doubleFilter)
+        if (!nothingFoundTextBox) { allCards(doubleFilter) }
         console.log("render doubleFilter");
     } else {
-        if (!nothingFoundTextBox && !nothingFoundCheckBox) {
+        if (nothingFoundTextBox /* && !nothingFoundCheckBox */) {
             cardsGrid.innerHTML = `
             <div>
             <h3>Nothing found</h3>
@@ -93,22 +108,23 @@ function oneCard(card) {
 let categoriesMenu = document.getElementById('categoriesMenu')
 
 let categories = []
-cards.forEach((element) => {
-    if (!categories.includes(element.category)) {
-        categories.push(element.category)
-    }
-})
+function menuCategories() {
+    cards.forEach((element) => {
+        if (!categories.includes(element.category)) {
+            categories.push(element.category)
+        }
+    })
 
-let menues = ''
-categories.forEach(category => {
-    menues += `<div class="me-3" >
+    let menues = ''
+    categories.forEach(category => {
+        menues += `<div class="me-3" >
                                 <input type="checkbox" name="category" id="${category}" value="${category}">
                                 <label for="${category}">${category}</label>
                             </div>`})
 
-categoriesMenu.innerHTML = menues
-
-renderCards()
+    categoriesMenu.innerHTML = menues
+}
+//renderCards()
 
 //         ------           Search Bar         -------        //
 
@@ -117,13 +133,19 @@ let searchText = document.getElementById("searchText")
 // keyUp
 searchText.addEventListener('keyup', function (e) {
     filterBySearchText = []
-    console.log("evento keyup: " + searchText.value.trim().toLowerCase())
-    cards.forEach(event => {
-        if (event.name.toLowerCase().includes(searchText.value.trim().toLowerCase())) {
+    if (searchText.value == "") {
+        cards.forEach(event => {
             filterBySearchText.push(event)
-            console.log(event.name.toLowerCase() + " | " + searchText.value.trim().toLowerCase())
-        }
-    })
+        })
+    } else {
+        console.log("evento keyup: " + searchText.value.trim().toLowerCase())
+        cards.forEach(event => {
+            if (event.name.toLowerCase().includes(searchText.value.trim().toLowerCase())) {
+                filterBySearchText.push(event)
+                //console.log(event.name.toLowerCase() + " | " + searchText.value.trim().toLowerCase())
+            }
+        })
+    }
     console.log(filterBySearchText.length);
     if (filterBySearchText.length == 0 && searchText.length != 0) {
         nothingFoundTextBox = true
@@ -132,6 +154,7 @@ searchText.addEventListener('keyup', function (e) {
     }
     console.log("Se encontró algo en el textBox? " + !nothingFoundTextBox);
     //allCards(filterBySearchText)
+
     renderCards()
 })
 
@@ -159,8 +182,8 @@ categoriesMenu.addEventListener('click', (e) => {
             }
         })
     }
-    console.log("-------------------------");
-    filteredCategory.map(c => console.log(c.name, c.category))
+    //console.log("-------------------------");
+    //filteredCategory.map(c => console.log(c.name, c.category))
     console.log(filteredCategory.length);
     //allCards(filteredCategory)
     if (filteredCategory.length == 0 && !e.target.checked) {

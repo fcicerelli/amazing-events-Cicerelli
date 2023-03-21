@@ -25,6 +25,15 @@ main {
     background-color: lightblue;
 }
 
+#cardsGrid div p {
+    height: 500px;
+}
+
+#cardsGrid div img {
+    height: 100px;
+    object-fit: cover;
+}
+
 #details div img {
     /* height: 25vh; */
     object-fit: cover;
