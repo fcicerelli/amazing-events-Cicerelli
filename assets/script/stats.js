@@ -9,6 +9,11 @@ let eventsTranformed = []      //  nuevo objeto con toda la informacion necesari
 let upcomingEvents = [] //  events.date >= currentDate
 let pastEvents = []     //  events.date < currentDate
 let categories = []     // arreglo de categorías
+let upcomingStats = []
+let pastStats = []
+let eventsWithHigestAssistance = []
+let eventsWithLowestAssistance = []
+let eventsWithHigestCapacity = []
 
 fetch(URL)
     .then(response => response.json())
@@ -20,9 +25,22 @@ fetch(URL)
         filterEvents(eventsTranformed)
         //console.log(eventsTranformed);
         //console.log(upcomingEvents);
-        //console.log(pastEvents);
+        console.log(pastEvents);
         generateCategories()
-        calculateStatisticsCategories(upcomingEvents)
+        upcomingStats = calculateStatisticsCategories(upcomingEvents)
+        pastStats = calculateStatisticsCategories(pastEvents)
+        //console.log(pastStats);
+        eventsHigestAssistance(pastEvents)
+        eventsWithHigestAssistance.forEach(arr => console.log(`${arr.percentage} ${arr.name}`))
+        console.log(eventsWithHigestAssistance);
+        eventsLowestAssistance(pastEvents)
+        eventsWithLowestAssistance.forEach(arr => console.log(`${arr.percentage} ${arr.name}`))
+        console.log(eventsWithLowestAssistance);
+        eventsWithHigestAssistance.forEach(arr => console.log(`${arr.percentage} ${arr.name}`))
+        console.log("---");
+        eventsHigestCapatity(pastEvents)
+        eventsWithHigestCapacity.forEach(arr => console.log(`${arr.capacity} ${arr.name}`))
+        console.log(eventsWithHigestCapacity);
         generateTableEventsStatistics()
         generateTableUpcomingEventsStatistics()
         generateTablePastEventsStatistics()
@@ -31,44 +49,43 @@ fetch(URL)
 
 //      -----  Events Statistics   -----
 function generateTableEventsStatistics() {
-    eventStatistics.innerHTML += `<tr>
-                                <td class="border p-3">Events with the highest percentage of attendance</td>
-                                <td class="border">Events with the lowest percentage of attendance</td>
-                                <td class="border">Events with larger capacity</td>
-                            </tr>`
-    eventStatistics.innerHTML += `<tr>
-                                    <td>${eventsTranformed[0].name}: ${eventsTranformed[0].percentage} %</td>
-                                    <td>${eventsTranformed[30].name}: ${eventsTranformed[30].percentage} %</td>
-                                    <td>${eventsTranformed[15].name}: ${eventsTranformed[15].percentage} %</td>
-                                </tr>`
-    eventStatistics.innerHTML += `<tr>
-                                    <td>${eventsTranformed[1].name}: ${eventsTranformed[1].percentage} %</td>
-                                    <td>${eventsTranformed[29].name}: ${eventsTranformed[29].percentage} %</td>
-                                    <td>${eventsTranformed[16].name}: ${eventsTranformed[16].percentage} %</td>
-                                </tr>`
-    eventStatistics.innerHTML += `<tr>
-                                    <td>${eventsTranformed[2].name}: ${eventsTranformed[2].percentage} %</td>
-                                    <td>${eventsTranformed[18].name}: ${eventsTranformed[28].percentage} %</td>
-                                    <td>${eventsTranformed[17].name}: ${eventsTranformed[17].percentage} %</td>
-                                </tr>`
+    let renderTable = ``
+    for (let i = 0; i < 3; i++) {
+        renderTable += `<tr>
+            <td class="border border-secondary text-center">${eventsWithHigestAssistance[i].name}: ${eventsWithHigestAssistance[i].percentage} %</td>
+            <td class="border border-secondary text-center">${eventsWithLowestAssistance[i].name}: ${eventsWithLowestAssistance[i].percentage} %</td>
+            <td class="border border-secondary text-center">${eventsWithHigestCapacity[i].name}: ${eventsWithHigestCapacity[i].capacity}</td>
+        </tr>`
+    }
+    eventStatistics.innerHTML = renderTable
+
 }
 
 //      -----  Upcoming Events Statistics   -----
 function generateTableUpcomingEventsStatistics() {
-    upcomingEventsStatistics.innerHTML += `<tr>
-                                            <td class="border">Categories</td>
-                                            <td class="border">Revenues</td>
-                                            <td class="border">Percentage of attendance</td>
-                                        </tr>`
+    let renderTable = ``
+    upcomingStats.forEach(category => {
+        renderTable += `<tr>
+                            <td class="border border-secondary text-center">${category.category}</td>
+                            <td class="border border-secondary text-center">$ ${category.revenues}</td>
+                            <td class="border border-secondary text-center">${category.porcentage.toFixed(2)} %</td>
+                        </tr>`
+    })
+    upcomingEventsStatistics.innerHTML = renderTable
 }
 
 //      -----  Past Events Statistics   -----
 function generateTablePastEventsStatistics() {
-    pastEventsStatistics.innerHTML += `<tr>
-                                            <td class="border">Categories</td>
-                                            <td class="border">Revenues</td>
-                                            <td class="border">Percentage of attendance</td>
-                                        </tr>`
+    //console.log(pastStats)
+    let renderTable = ``
+    pastStats.forEach(category => {
+        renderTable += `<tr>
+                            <td class="border border-secondary text-center">${category.category}</td>
+                            <td class="border border-secondary text-center">$ ${category.revenues}</td>
+                            <td class="border border-secondary text-center">${category.porcentage.toFixed(2)} %</td>
+                        </tr>`
+    })
+    pastEventsStatistics.innerHTML = renderTable
 }
 function filterEvents(cards) {
     //console.log(cards)
@@ -102,15 +119,41 @@ function generateCategories() {
             categories.push(element.category)
         }
     })
+    categories.sort()
     //console.log(categories);
 }
 
 // Agrupa por categorías
 function calculateStatisticsCategories(arr) {
-    let categoryStats = []
-    console.log(categoryStats);
-    arr.map(element => element.category === "concert")
-    return categoryStats
+    //console.log(arr);
+    let categoriesStats = []
+    categories.forEach(category => {
+        let n = 0
+        let revenue = 0
+        let porcent = 0
+        arr.forEach(element => {
+            //console.log(element);
+            //console.log(element.category === category);
+            //console.log(element.category);
+            //console.log(category);
+
+            if (element.category === category) {
+                revenue += element.revenue
+                porcent = porcent + Number.parseFloat(element.percentage)
+                n++
+                //console.log(element);
+            }
+            //console.log(`n ${n} ingreso ${revenue} porcentaje ${porcent}`);
+        })
+        categoriesStats.push({
+            category: category,
+            porcentage: n == 0 ? n : porcent / n,
+            revenues: revenue
+        })
+        //console.log(`n ${n} ingreso ${revenue} porcentaje ${porcent}`);
+    })
+    //console.log(categoriesStats);
+    return categoriesStats
 }
 
 // Genera un arreglo conteniendo la información necesaria para generar las tablas: 
@@ -136,12 +179,13 @@ function eventsWithStats() {
 }
 
 function eventsHigestAssistance(array) {
-    return
+    eventsWithHigestAssistance = array.map(a => a).sort((e1, e2) => (e1.percentage < e2.percentage) ? 1 : (e1.percentage > e2.percentage) ? -1 : 0)
 }
 function eventsLowestAssistance(array) {
-    return
+    eventsWithLowestAssistance = array.map(a => a).sort((e1, e2) => (e1.percentage < e2.percentage) ? -1 : (e1.percentage > e2.percentage) ? 1 : 0)
 }
+
 function eventsHigestCapatity(array) {
-    return
+    eventsWithHigestCapacity = array.map(a => a).sort((e1, e2) => (e1.capacity < e2.capacity) ? 1 : (e1.capacity > e2.capacity) ? -1 : 0)
 }
 

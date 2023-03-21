@@ -31,14 +31,14 @@ function allCards(cards) {
 }
 
 function oneCard(card) {
-    return `<div class="card h-100 rounded-0 col-2">
-                <img src="${card.image}" class="card-img-top" alt="...">
+    return `<div class="card h-100 rounded-0 col-12 col-sm-5 col-md-4 col-lg-3">
+                <img src="${card.image}" class="card-img-top" alt="${card.place}">
                 <div class="card-body d-flex flex-column align-items-center">
                     <h5 class="card-title">${card.name}</h5>
                     <p class="card-text">${card.description}</p>
                     <div>
-                        <p class="d-inline">Price: $ ${card.price}</p>
-                        <a href="/pages/details.html?id=${card._id}" class="btn btn-primary rounded-0">Ver mas...</a>
+                        <p class="d-inline text-danger fw-bold">Price: $ ${card.price}</p>
+                        <a href="./pages/details.html?id=${card._id}" class="btn btn-primary rounded-0">More...</a>
                     </div>
                 </div>
             </div>`
